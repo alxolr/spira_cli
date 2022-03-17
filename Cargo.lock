@@ -784,6 +784,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "spira"
+version = "0.0.1"
+dependencies = [
+ "reqwest",
+ "serde",
+ "serde_json",
+ "serde_with",
+]
+
+[[package]]
 name = "spira_cli"
 version = "0.1.0"
 dependencies = [
@@ -794,6 +804,7 @@ dependencies = [
  "serde_json",
  "serde_with",
  "serde_yaml",
+ "spira",
  "tokio",
 ]
 

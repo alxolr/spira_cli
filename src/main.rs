@@ -1,8 +1,9 @@
 use dotenv::dotenv;
-use spira_client::{entities::task::TaskDto, SpiraClient};
+use resources::UiLink;
+use spira::{resources::task::TaskDto, SpiraClient};
 use std::{env, io::BufReader, path::Path};
 
-mod spira_client;
+pub mod resources;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -23,11 +24,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn get_yaml_tasks() -> Vec<TaskDto> {
-    let arg = env::args().skip(1).last().unwrap();
+    let arg = env::args()
+        .skip(1)
+        .last()
+        .expect("Yaml file path was not provided");
     let path = Path::new(&arg);
+
     let input = std::fs::File::open(path).expect("Provided file does not exist");
     let rdr = BufReader::new(input);
-    let result = serde_yaml::from_reader(rdr).expect("Could not parse the yaml file");
 
-    result
+    serde_yaml::from_reader(rdr).expect("Could not parse the yaml file")
 }
