@@ -1,6 +1,6 @@
 use std::env;
 
-use spira::resources::task::TaskDto;
+use spira::resources::task::{TaskClient, TaskDto};
 
 use super::UiLink;
 
@@ -15,3 +15,4 @@ impl UiLink for TaskDto {
         )
     }
 }
+

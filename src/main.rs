@@ -13,12 +13,22 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let base_url = env::var("SPIRA_API_URL")?;
 
     let spira_client = SpiraClient::new(&base_url, &api_key, &username)?;
-    let tasks = get_yaml_tasks();
 
+    let tasks = spira_client.task.list_my().await?;
     for task in tasks {
-        let task = spira_client.task.create(task.project_id, task).await?;
-        println!("{}\n{}\n", task.name, task.get_link());
+        println!(
+            "{}\n{}\n",
+            task.name.as_ref().unwrap(),
+            task.get_link()
+        );
     }
+
+    // let tasks = get_yaml_tasks();
+
+    // for task in tasks {
+    //     let task = spira_client.task.create(task.project_id, task).await?;
+    //     println!("{}\n{}\n", task.name.as_ref().unwrap(), task.get_link());
+    // }
 
     Ok(())
 }
