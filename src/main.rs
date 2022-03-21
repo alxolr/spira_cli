@@ -20,6 +20,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let base_url = env::var("SPIRA_API_URL").expect("Envar SPIRA_API_URL is not set.");
 
     let spira_client = SpiraClient::new(&base_url, &api_key, &username)?;
+    
     let cmd = Spira::from_args();
 
     match cmd {

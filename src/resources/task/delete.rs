@@ -1,15 +1,12 @@
 use spira::SpiraClient;
-use std::{error::Error, path::PathBuf};
+use std::error::Error;
 use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
-#[structopt(about = "Create Task", rename_all = "kebab-case")]
-pub struct Create {
-    #[structopt()]
-    pub path: PathBuf,
-}
+#[structopt(about = "Delete Task", rename_all = "kebab-case")]
+pub struct Delete {}
 
-impl Create {
+impl Delete {
     pub async fn run<'a>(&self, client: &'a SpiraClient<'_>) -> Result<(), Box<dyn Error>> {
         println!("kind of working");
 
