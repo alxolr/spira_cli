@@ -26,7 +26,7 @@ impl UiLink for TaskDto {
 }
 
 #[derive(StructOpt, Debug)]
-#[structopt(version = "0.1.0", about = "Task Cli", rename_all = "kebab-case")]
+#[structopt(version = "0.1.0", about = "Tasks Cli", rename_all = "kebab-case")]
 pub enum TaskCli {
     Create(Create),
     Delete(Delete),

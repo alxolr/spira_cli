@@ -1,5 +1,5 @@
 use dotenv::dotenv;
-use resources::task::TaskCli;
+use resources::{task::TaskCli, user::UserCli};
 use spira::SpiraClient;
 use std::env;
 use structopt::StructOpt;
@@ -10,6 +10,7 @@ pub mod resources;
 #[structopt(version = "0.1.0", about = "Spira Cli", rename_all = "kebab-case")]
 enum Spira {
     Task(TaskCli),
+    User(UserCli),
 }
 
 #[tokio::main]
@@ -24,6 +25,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     match spira_cli {
         Spira::Task(task) => task.run(&spira_client).await?,
+        Spira::User(user) => user.run(&spira_client).await?,
     }
 
     Ok(())
