@@ -1,3 +1,4 @@
+pub mod incident;
 pub mod task;
 pub mod user;
 
