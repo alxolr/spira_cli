@@ -1,6 +1,7 @@
 pub mod create;
 pub mod delete;
 pub mod get;
+pub mod update;
 
 use std::env;
 
@@ -8,7 +9,7 @@ use spira::{resources::task::TaskDto, SpiraClient};
 use std::error::Error;
 use structopt::StructOpt;
 
-use self::{create::Create, delete::Delete, get::Get};
+use self::{create::Create, delete::Delete, get::Get, update::Update};
 
 use super::UiLink;
 
@@ -30,6 +31,7 @@ pub enum TaskCli {
     Create(Create),
     Delete(Delete),
     Get(Get),
+    Update(Update),
 }
 
 impl TaskCli {
@@ -38,6 +40,7 @@ impl TaskCli {
             TaskCli::Create(create) => create.run(client).await?,
             TaskCli::Delete(delete) => delete.run(client).await?,
             TaskCli::Get(get) => get.run(client).await?,
+            TaskCli::Update(update) => update.run(client).await?,
         }
 
         Ok(())

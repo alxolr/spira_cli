@@ -5,8 +5,8 @@ use structopt::StructOpt;
 use crate::resources::UiLink;
 
 #[derive(StructOpt, Debug)]
-#[structopt(about = "Create Tasks", rename_all = "kebab-case")]
-pub struct Create {
+#[structopt(about = "Update Tasks", rename_all = "kebab-case")]
+pub struct Update {
     #[structopt(
         help = "Yaml file path to load the tasks from.",
         default_value = "./tasks.yaml"
@@ -14,7 +14,7 @@ pub struct Create {
     pub path: PathBuf,
 }
 
-impl Create {
+impl Update {
     pub async fn run(&self, client: &SpiraClient<'_>) -> Result<(), Box<dyn Error>> {
         let input = std::fs::File::open(&self.path).expect("Provided file does not exist");
         let rdr = BufReader::new(input);
@@ -22,8 +22,11 @@ impl Create {
             serde_yaml::from_reader(rdr).expect("Could not parse the yaml file");
 
         for task in tasks {
-            let task = client.task.create(task.project_id, task).await?;
-            println!("{}\n{}\n", task.name.as_ref().unwrap(), task.get_link());
+            let link = task.get_link();
+            let id = task.task_id.unwrap();
+            client.task.update(task.project_id, task).await?;
+            
+            println!("Task {} was updated\n{}", id, link);
         }
 
         Ok(())
