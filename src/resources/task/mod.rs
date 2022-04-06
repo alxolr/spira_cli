@@ -1,3 +1,4 @@
+pub mod complete;
 pub mod create;
 pub mod delete;
 pub mod get;
@@ -9,7 +10,7 @@ use spira::{resources::task::TaskDto, SpiraClient};
 use std::error::Error;
 use structopt::StructOpt;
 
-use self::{create::Create, delete::Delete, get::Get, update::Update};
+use self::{complete::Complete, create::Create, delete::Delete, get::Get, update::Update};
 
 use super::UiLink;
 
@@ -26,12 +27,13 @@ impl UiLink for TaskDto {
 }
 
 #[derive(StructOpt, Debug)]
-#[structopt(version = "0.1.0", about = "Tasks Cli", rename_all = "kebab-case")]
+#[structopt(about = "Tasks Cli", rename_all = "kebab-case")]
 pub enum TaskCli {
     Create(Create),
     Delete(Delete),
     Get(Get),
     Update(Update),
+    Complete(Complete),
 }
 
 impl TaskCli {
@@ -41,6 +43,7 @@ impl TaskCli {
             TaskCli::Delete(delete) => delete.run(client).await?,
             TaskCli::Get(get) => get.run(client).await?,
             TaskCli::Update(update) => update.run(client).await?,
+            TaskCli::Complete(complete) => complete.run(client).await?,
         }
 
         Ok(())
