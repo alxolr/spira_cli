@@ -7,7 +7,7 @@ use structopt::StructOpt;
 pub mod resources;
 
 #[derive(StructOpt, Debug)]
-#[structopt(version = "0.1.0", about = "Spira Cli", rename_all = "kebab-case")]
+#[structopt(version = "0.2.0", about = "Spira Cli", rename_all = "kebab-case")]
 enum Spira {
     Task(TaskCli),
     User(UserCli),

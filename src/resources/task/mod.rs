@@ -2,6 +2,7 @@ pub mod complete;
 pub mod create;
 pub mod delete;
 pub mod get;
+pub mod link;
 pub mod update;
 
 use std::env;
@@ -10,7 +11,9 @@ use spira::{resources::task::TaskDto, SpiraClient};
 use std::error::Error;
 use structopt::StructOpt;
 
-use self::{complete::Complete, create::Create, delete::Delete, get::Get, update::Update};
+use self::{
+    complete::Complete, create::Create, delete::Delete, get::Get, link::Link, update::Update,
+};
 
 use super::UiLink;
 
@@ -34,16 +37,18 @@ pub enum TaskCli {
     Get(Get),
     Update(Update),
     Complete(Complete),
+    Link(Link),
 }
 
 impl TaskCli {
     pub async fn run(&self, client: &SpiraClient<'_>) -> Result<(), Box<dyn Error>> {
         match self {
-            TaskCli::Create(create) => create.run(client).await?,
-            TaskCli::Delete(delete) => delete.run(client).await?,
-            TaskCli::Get(get) => get.run(client).await?,
-            TaskCli::Update(update) => update.run(client).await?,
-            TaskCli::Complete(complete) => complete.run(client).await?,
+            TaskCli::Create(cmd) => cmd.run(client).await?,
+            TaskCli::Delete(cmd) => cmd.run(client).await?,
+            TaskCli::Get(cmd) => cmd.run(client).await?,
+            TaskCli::Update(cmd) => cmd.run(client).await?,
+            TaskCli::Complete(cmd) => cmd.run(client).await?,
+            TaskCli::Link(cmd) => cmd.run().await?,
         }
 
         Ok(())
