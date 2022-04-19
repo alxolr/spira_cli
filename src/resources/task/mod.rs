@@ -11,6 +11,10 @@ use spira::{resources::task::TaskDto, SpiraClient};
 use std::error::Error;
 use structopt::StructOpt;
 
+pub enum TaskStatus {
+    Complete = 3,
+}
+
 use self::{
     complete::Complete, create::Create, delete::Delete, get::Get, link::Link, update::Update,
 };
