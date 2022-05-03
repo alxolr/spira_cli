@@ -1,3 +1,4 @@
+pub mod change;
 pub mod create;
 pub mod delete;
 pub mod get;
@@ -9,7 +10,7 @@ use spira::{resources::incident::IncidentDto, SpiraClient};
 use std::error::Error;
 use structopt::StructOpt;
 
-use self::{create::Create, delete::Delete, get::Get, update::Update};
+use self::{change::Change, create::Create, delete::Delete, get::Get, update::Update};
 
 use super::UiLink;
 
@@ -32,15 +33,17 @@ pub enum IncidentCli {
     Delete(Delete),
     Get(Get),
     Update(Update),
+    Change(Change),
 }
 
 impl IncidentCli {
     pub async fn run(&self, client: &SpiraClient<'_>) -> Result<(), Box<dyn Error>> {
         match self {
-            IncidentCli::Create(create) => create.run(client).await?,
-            IncidentCli::Delete(delete) => delete.run(client).await?,
-            IncidentCli::Get(get) => get.run(client).await?,
-            IncidentCli::Update(update) => update.run(client).await?,
+            IncidentCli::Create(task) => task.run(client).await?,
+            IncidentCli::Delete(task) => task.run(client).await?,
+            IncidentCli::Get(task) => task.run(client).await?,
+            IncidentCli::Update(task) => task.run(client).await?,
+            IncidentCli::Change(task) => task.run(client).await?,
         }
 
         Ok(())

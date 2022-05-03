@@ -1,5 +1,5 @@
 use dotenv::dotenv;
-use resources::{incident::IncidentCli, task::TaskCli, user::UserCli};
+use resources::{incident::IncidentCli, requirement::RequirementCli, task::TaskCli, user::UserCli};
 use spira::SpiraClient;
 use std::env;
 use structopt::StructOpt;
@@ -12,6 +12,7 @@ enum Spira {
     Task(TaskCli),
     User(UserCli),
     Incident(IncidentCli),
+    Requirement(RequirementCli),
 }
 
 #[tokio::main]
@@ -25,9 +26,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let spira_cli = Spira::from_args();
 
     match spira_cli {
-        Spira::Task(task) => task.run(&spira_client).await?,
-        Spira::User(user) => user.run(&spira_client).await?,
-        Spira::Incident(incident) => incident.run(&spira_client).await?,
+        Spira::Task(cmd) => cmd.run(&spira_client).await?,
+        Spira::User(cmd) => cmd.run(&spira_client).await?,
+        Spira::Incident(cmd) => cmd.run(&spira_client).await?,
+        Spira::Requirement(cmd) => cmd.run(&spira_client).await?,
     }
 
     Ok(())
