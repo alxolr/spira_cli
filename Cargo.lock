@@ -854,6 +854,8 @@ dependencies = [
 [[package]]
 name = "spira"
 version = "0.0.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8e2ef54324bee80e918a8e7883bbd66b3e781ecf12d5e61aa1313b572bf8910e"
 dependencies = [
  "reqwest",
  "serde",

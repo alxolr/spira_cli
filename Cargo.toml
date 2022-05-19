@@ -1,6 +1,15 @@
 [package]
+authors = ["Alexandru Olaru <alxolr@gmail.com>"]
+description = "A command line tool to integrate with spira api"
 edition = "2021"
+include = [
+  "**/*.rs",
+  "Cargo.toml",
+]
+keywords = ["cli", "productivity", "inflectra", "spira"]
+license = "MIT OR Apache-2.0"
 name = "spira_cli"
+repository = "https://github.com/alxolr/spira_cli"
 version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -13,6 +22,6 @@ serde = {version = "1", features = ["derive"]}
 serde_json = "1.0"
 serde_with = "1.12"
 serde_yaml = "0.8"
-spira = {path = "../spira"}
-tokio = {version = "1", features = ["full"]}
+spira = "0.0.5"
 structopt = "0"
+tokio = {version = "1", features = ["full"]}
