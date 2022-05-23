@@ -23,7 +23,6 @@ export SPIRA_BASE_URL="https://{company}.spiraservice.net"
 
 ```bash
 ➜  ~ spira_cli
-spira_cli 0.1.0
 Spira Cli
 
 USAGE:

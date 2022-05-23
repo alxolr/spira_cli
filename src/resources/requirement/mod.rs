@@ -1,3 +1,7 @@
+pub mod change;
+pub mod get;
+pub mod link;
+
 use std::env;
 
 use self::{change::Change, get::Get};
@@ -6,9 +10,6 @@ use std::error::Error;
 use structopt::StructOpt;
 
 use super::UiLink;
-
-pub mod change;
-pub mod get;
 
 impl UiLink for RequirementDto {
     fn get_link(&self) -> String {

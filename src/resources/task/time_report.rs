@@ -2,7 +2,7 @@ use spira::SpiraClient;
 use std::error::Error;
 use structopt::StructOpt;
 
-use crate::resources::UiLink;
+use crate::resources::{task::TaskStatus, UiLink};
 
 #[derive(StructOpt, Debug)]
 #[structopt(about = "Time Report", rename_all = "snake-case")]
@@ -30,7 +30,13 @@ impl TimeReport {
 
             task.actual_effort =
                 Some(task.actual_effort.unwrap_or(0) + self.additional_effort * 60);
-            task.remaining_effort = Some(self.remaining_effort * 60);
+
+            if self.remaining_effort == 0 {
+                task.remaining_effort = Some(0);
+                task.task_status_id = Some(TaskStatus::Complete as u64);
+            } else {
+                task.remaining_effort = Some(self.remaining_effort * 60);
+            }
 
             client.task.update(self.project_id, task).await?;
             println!("{} - Time updated", link);
