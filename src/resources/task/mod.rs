@@ -1,4 +1,3 @@
-pub mod complete;
 pub mod create;
 pub mod delete;
 pub mod get;
@@ -17,8 +16,7 @@ pub enum TaskStatus {
 }
 
 use self::{
-    complete::Complete, create::Create, delete::Delete, get::Get, link::Link,
-    time_report::TimeReport, update::Update,
+    create::Create, delete::Delete, get::Get, link::Link, time_report::TimeReport, update::Update,
 };
 
 use super::UiLink;
@@ -42,7 +40,6 @@ pub enum TaskCli {
     Delete(Delete),
     Get(Get),
     Update(Update),
-    Complete(Complete),
     TimeReport(TimeReport),
     Link(Link),
 }
@@ -54,7 +51,6 @@ impl TaskCli {
             TaskCli::Delete(cmd) => cmd.run(client).await?,
             TaskCli::Get(cmd) => cmd.run(client).await?,
             TaskCli::Update(cmd) => cmd.run(client).await?,
-            TaskCli::Complete(cmd) => cmd.run(client).await?,
             TaskCli::TimeReport(cmd) => cmd.run(client).await?,
             TaskCli::Link(cmd) => cmd.run().await?,
         }
