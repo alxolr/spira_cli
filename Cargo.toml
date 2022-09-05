@@ -22,6 +22,6 @@ serde = {version = "1", features = ["derive"]}
 serde_json = "1.0"
 serde_with = "1.12"
 serde_yaml = "0.8"
-spira = "0.0.5"
+spira = {path = "../spira"}
 structopt = "0"
 tokio = {version = "1", features = ["full"]}
