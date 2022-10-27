@@ -4,7 +4,7 @@ pub mod link;
 
 use std::env;
 
-use self::{change::Change, get::Get};
+use self::{change::Change, get::Get, link::Link};
 use spira::{resources::requirement::RequirementDto, SpiraClient};
 use std::error::Error;
 use structopt::StructOpt;
@@ -32,6 +32,7 @@ impl UiLink for RequirementDto {
 pub enum RequirementCli {
     Get(Get),
     Change(Change),
+    Link(Link),
 }
 
 impl RequirementCli {
@@ -39,6 +40,7 @@ impl RequirementCli {
         match self {
             RequirementCli::Get(cmd) => cmd.run(client).await?,
             RequirementCli::Change(cmd) => cmd.run(client).await?,
+            RequirementCli::Link(cmd) => cmd.run().await?,
         }
 
         Ok(())
