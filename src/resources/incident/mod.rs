@@ -3,6 +3,7 @@ pub mod create;
 pub mod delete;
 pub mod get;
 pub mod link;
+pub mod list_my;
 pub mod update;
 
 use std::env;
@@ -11,7 +12,10 @@ use spira::{resources::incident::IncidentDto, SpiraClient};
 use std::error::Error;
 use structopt::StructOpt;
 
-use self::{change::Change, create::Create, delete::Delete, get::Get, link::Link, update::Update};
+use self::{
+    change::Change, create::Create, delete::Delete, get::Get, link::Link, list_my::ListMy,
+    update::Update,
+};
 
 use super::UiLink;
 
@@ -36,6 +40,7 @@ pub enum IncidentCli {
     Update(Update),
     Change(Change),
     Link(Link),
+    ListMy(ListMy),
 }
 
 impl IncidentCli {
@@ -47,6 +52,7 @@ impl IncidentCli {
             IncidentCli::Update(task) => task.run(client).await?,
             IncidentCli::Change(task) => task.run(client).await?,
             IncidentCli::Link(task) => task.run().await?,
+            IncidentCli::ListMy(task) => task.run(client).await?,
         }
 
         Ok(())

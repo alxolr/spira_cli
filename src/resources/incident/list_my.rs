@@ -1,0 +1,21 @@
+use spira::SpiraClient;
+use std::error::Error;
+use structopt::StructOpt;
+
+use crate::resources::UiLink;
+
+#[derive(StructOpt, Debug)]
+#[structopt(about = "List incidents assigned to me", rename_all = "kebab-case")]
+pub struct ListMy {}
+
+impl ListMy {
+    pub async fn run(&self, client: &SpiraClient<'_>) -> Result<(), Box<dyn Error>> {
+        let incidents = client.incident.list_my().await?;
+
+        incidents
+            .iter()
+            .for_each(|incident| println!("{} - {}", incident.get_link(), incident.name));
+
+        Ok(())
+    }
+}
