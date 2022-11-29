@@ -1,7 +1,7 @@
 use dotenv::dotenv;
 use resources::{
-    incident::IncidentCli, release::ReleaseCli, requirement::RequirementCli, task::TaskCli,
-    user::UserCli,
+    incident::IncidentCli, project_template::ProjectTemplateCli, release::ReleaseCli,
+    requirement::RequirementCli, task::TaskCli, user::UserCli,
 };
 use spira::SpiraClient;
 use std::env;
@@ -17,6 +17,7 @@ enum Spira {
     Incident(IncidentCli),
     Requirement(RequirementCli),
     Release(ReleaseCli),
+    ProjectTemplate(ProjectTemplateCli),
 }
 
 #[tokio::main]
@@ -35,6 +36,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         Spira::Incident(cmd) => cmd.run(&spira_client).await?,
         Spira::Requirement(cmd) => cmd.run(&spira_client).await?,
         Spira::Release(cmd) => cmd.run(&spira_client).await?,
+        Spira::ProjectTemplate(cmd) => cmd.run(&spira_client).await?,
     }
 
     Ok(())
