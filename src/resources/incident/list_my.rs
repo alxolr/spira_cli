@@ -1,4 +1,3 @@
-use serde_json::Number;
 use spira::SpiraClient;
 use std::error::Error;
 use structopt::StructOpt;
