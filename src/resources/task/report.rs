@@ -5,8 +5,8 @@ use structopt::StructOpt;
 use crate::resources::{task::TaskStatus, UiLink};
 
 #[derive(StructOpt, Debug)]
-#[structopt(about = "Time Report", rename_all = "snake-case")]
-pub struct TimeReport {
+#[structopt(about = "Report", rename_all = "snake-case")]
+pub struct Report {
     #[structopt(help = "The id of the project (integer)")]
     project_id: u64,
 
@@ -20,7 +20,7 @@ pub struct TimeReport {
     remaining_effort: u64,
 }
 
-impl TimeReport {
+impl Report {
     pub async fn run(&self, client: &SpiraClient<'_>) -> Result<(), Box<dyn Error>> {
         let maybe_task = client.task.get(self.project_id, self.task_id).await;
 

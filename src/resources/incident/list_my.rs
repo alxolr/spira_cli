@@ -22,8 +22,8 @@ impl ListMy {
                 name.contains("Business Value")
             });
 
-            if item.is_some() {
-                let business_value = item.unwrap().get("IntegerValue").unwrap();
+            if let Some(item) = item {
+                let business_value = item.get("IntegerValue").unwrap();
                 println!(
                     "{} {} {}",
                     incident.get_link(),

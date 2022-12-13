@@ -4,6 +4,7 @@ pub mod delete;
 pub mod get;
 pub mod link;
 pub mod list_my;
+pub mod report;
 pub mod update;
 
 use std::env;
@@ -14,7 +15,7 @@ use structopt::StructOpt;
 
 use self::{
     change::Change, create::Create, delete::Delete, get::Get, link::Link, list_my::ListMy,
-    update::Update,
+    report::Report, update::Update,
 };
 
 use super::UiLink;
@@ -41,18 +42,20 @@ pub enum IncidentCli {
     Change(Change),
     Link(Link),
     ListMy(ListMy),
+    Report(Report),
 }
 
 impl IncidentCli {
     pub async fn run(&self, client: &SpiraClient<'_>) -> Result<(), Box<dyn Error>> {
         match self {
-            IncidentCli::Create(task) => task.run(client).await?,
-            IncidentCli::Delete(task) => task.run(client).await?,
-            IncidentCli::Get(task) => task.run(client).await?,
-            IncidentCli::Update(task) => task.run(client).await?,
-            IncidentCli::Change(task) => task.run(client).await?,
-            IncidentCli::Link(task) => task.run().await?,
-            IncidentCli::ListMy(task) => task.run(client).await?,
+            IncidentCli::Create(cmd) => cmd.run(client).await?,
+            IncidentCli::Delete(cmd) => cmd.run(client).await?,
+            IncidentCli::Get(cmd) => cmd.run(client).await?,
+            IncidentCli::Update(cmd) => cmd.run(client).await?,
+            IncidentCli::Change(cmd) => cmd.run(client).await?,
+            IncidentCli::Link(cmd) => cmd.run().await?,
+            IncidentCli::ListMy(cmd) => cmd.run(client).await?,
+            IncidentCli::Report(cmd) => cmd.run(client).await?,
         }
 
         Ok(())

@@ -2,7 +2,7 @@ pub mod create;
 pub mod delete;
 pub mod get;
 pub mod link;
-pub mod time_report;
+pub mod report;
 pub mod update;
 
 use std::env;
@@ -16,7 +16,7 @@ pub enum TaskStatus {
 }
 
 use self::{
-    create::Create, delete::Delete, get::Get, link::Link, time_report::TimeReport, update::Update,
+    create::Create, delete::Delete, get::Get, link::Link, report::Report, update::Update,
 };
 
 use super::UiLink;
@@ -40,7 +40,7 @@ pub enum TaskCli {
     Delete(Delete),
     Get(Get),
     Update(Update),
-    TimeReport(TimeReport),
+    TimeReport(Report),
     Link(Link),
 }
 

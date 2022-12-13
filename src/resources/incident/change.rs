@@ -11,10 +11,10 @@ pub struct Change {
     incident_id: u64,
 
     #[structopt(help = "New status of the incident", short)]
-    status_id: u64,
+    status_id: Option<u64>,
 
     #[structopt(help = "New owner of the incident", short)]
-    owner_id: u64,
+    owner_id: Option<u64>,
 }
 
 impl Change {
@@ -25,8 +25,13 @@ impl Change {
             .await?;
         let link = incident.get_link();
 
-        incident.incident_status_id = Some(self.status_id);
-        incident.owner_id = Some(self.owner_id);
+        if self.status_id.is_some() {
+            incident.incident_status_id = self.status_id;
+        }
+
+        if self.owner_id.is_some() {
+            incident.owner_id = self.owner_id;
+        }
 
         client.incident.update(self.project_id, incident).await?;
 
