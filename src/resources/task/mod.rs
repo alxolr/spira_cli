@@ -40,7 +40,7 @@ pub enum TaskCli {
     Delete(Delete),
     Get(Get),
     Update(Update),
-    TimeReport(Report),
+    Report(Report),
     Link(Link),
 }
 
@@ -51,7 +51,7 @@ impl TaskCli {
             TaskCli::Delete(cmd) => cmd.run(client).await?,
             TaskCli::Get(cmd) => cmd.run(client).await?,
             TaskCli::Update(cmd) => cmd.run(client).await?,
-            TaskCli::TimeReport(cmd) => cmd.run(client).await?,
+            TaskCli::Report(cmd) => cmd.run(client).await?,
             TaskCli::Link(cmd) => cmd.run().await?,
         }
 

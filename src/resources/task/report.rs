@@ -14,10 +14,10 @@ pub struct Report {
     task_id: u64,
 
     #[structopt(help = "Add additional effort daily, (hours)", short)]
-    additional_effort: u64,
+    additional_effort: f32,
 
     #[structopt(help = "Set up remaining effort, (hours)", short)]
-    remaining_effort: u64,
+    remaining_effort: f32,
 }
 
 impl Report {
@@ -29,17 +29,21 @@ impl Report {
             let link = task.get_link();
 
             task.actual_effort =
-                Some(task.actual_effort.unwrap_or(0) + self.additional_effort * 60);
+                Some(task.actual_effort.unwrap_or(0) + (self.additional_effort * 60.0) as u64);
 
-            if self.remaining_effort == 0 {
+            if self.remaining_effort == 0.0 {
                 task.remaining_effort = Some(0);
                 task.task_status_id = Some(TaskStatus::Complete as u64);
             } else {
-                task.remaining_effort = Some(self.remaining_effort * 60);
+                let remaining_efort = (self.remaining_effort * 60.0) as u64;
+                task.remaining_effort = Some(remaining_efort);
             }
 
             client.task.update(self.project_id, task).await?;
-            println!("{} - Time updated", link);
+            println!(
+                "{} -a {}h -r {}h",
+                link, self.additional_effort, self.remaining_effort
+            );
         } else {
             panic!(
                 "Could not find the requested task {} in project {}",
